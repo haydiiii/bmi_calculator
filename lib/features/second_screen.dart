@@ -1,13 +1,26 @@
-import 'package:bmi_calculator/colors.dart';
+import 'package:bmi_calculator/core/constants/text_style.dart';
+import 'package:bmi_calculator/core/utils/colors.dart';
 import 'package:flutter/material.dart';
 
-import 'first_screen.dart';
-
+// ignore: must_be_immutable
 class ResultView extends StatelessWidget {
-  ResultView({super.key});
-  TextStyle style1 = TextStyle(
-      fontSize: 40, fontWeight: FontWeight.bold, color: AppColor.white);
-  TextStyle style2 = TextStyle(fontSize: 20, color: AppColor.white);
+  const ResultView({super.key, required this.result});
+  final double result;
+
+  String? getClassification(double result) {
+    if (result < 16) {
+      return 'Severe Thinness';
+    } else if (result >= 16 || result <= 17) {
+      return 'Moderate Thinness';
+    } else if (result >= 18.5 || result <= 25) {
+      return 'Normal';
+    } else if (result >= 30 || result <= 35) {
+      return 'Overweight';
+    } else if (result > 40) {
+      return 'Obese Class III';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,12 +33,18 @@ class ResultView extends StatelessWidget {
         child: Center(
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(
-              ' Normal ',
-              style: style1,
+              getClassification(result).toString(),
+              style: AppTxtStyle.style1,
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Text(
-              '23.3',
-              style: style2,
+              result.toStringAsFixed(2),
+              style: AppTxtStyle.style2,
+            ),
+            const SizedBox(
+              height: 10,
             ),
             SizedBox(
               width: double.infinity,
@@ -37,10 +56,10 @@ class ResultView extends StatelessWidget {
                       foregroundColor: AppColor.white,
                       backgroundColor: AppColor.PrimaryColor),
                   onPressed: () {
-                    Navigator.of(context).pop(firstScreen());
+                    Navigator.of(context).pop();
                   },
-                  child: Text(
-                    ' RECalculate',
+                  child: const Text(
+                    ' ReCalculate',
                     style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.bold,

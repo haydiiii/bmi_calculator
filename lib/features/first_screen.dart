@@ -1,24 +1,35 @@
-import 'package:bmi_calculator/colors.dart';
-import 'package:bmi_calculator/second_screen.dart';
+import 'dart:math';
+
+import 'package:bmi_calculator/core/constants/text_style.dart';
+import 'package:bmi_calculator/core/utils/colors.dart';
+import 'package:bmi_calculator/features/second_screen.dart';
 import 'package:flutter/material.dart';
 
-class firstScreen extends StatefulWidget {
-  firstScreen({super.key});
+class FirstScreen extends StatefulWidget {
+  const FirstScreen({super.key});
 
   @override
-  State<firstScreen> createState() => _firstScreen();
+  State<FirstScreen> createState() => _FirstScreen();
 }
 
-class _firstScreen extends State<firstScreen> {
+class _FirstScreen extends State<FirstScreen> {
+
+
+//   Severe Thinness	< 16
+// Moderate Thinness	16 - 17
+// Mild Thinness	17 - 18.5
+// Normal	18.5 - 25
+// Overweight	25 - 30
+// Obese Class I	30 - 35
+// Obese Class II	35 - 40
+// Obese Class III	> 40
   int counter = 0;
   int height = 180;
   int weight = 80;
   int age = 23;
   bool isMale = true;
 
-  TextStyle style1 = TextStyle(
-      fontSize: 40, fontWeight: FontWeight.bold, color: AppColor.white);
-  TextStyle style2 = TextStyle(fontSize: 20, color: AppColor.white);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,22 +67,22 @@ class _firstScreen extends State<firstScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.male,
                                 color: AppColor.white,
                                 size: 120,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 2,
                               ),
-                              Text('male', style: style2)
+                              Text('male', style: AppTxtStyle.style2)
                             ],
                           ),
                         ),
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
@@ -91,15 +102,15 @@ class _firstScreen extends State<firstScreen> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.female_rounded,
                                 color: AppColor.white,
                                 size: 120,
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 2,
                               ),
-                              Text('female', style: style2)
+                              Text('female', style: AppTxtStyle.style2)
                             ],
                           ),
                         ),
@@ -114,7 +125,7 @@ class _firstScreen extends State<firstScreen> {
             // ),
             Expanded(
               child: Container(
-                margin: EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                     color: AppColor.Contbackground,
                     borderRadius: BorderRadius.circular(20)),
@@ -125,9 +136,9 @@ class _firstScreen extends State<firstScreen> {
                     children: [
                       Text(
                         'Height',
-                        style: style2,
+                        style: AppTxtStyle.style2,
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 3,
                       ),
                       Center(
@@ -138,14 +149,14 @@ class _firstScreen extends State<firstScreen> {
                           children: [
                             Text(
                               height.toString(),
-                              style: style1,
+                              style: AppTxtStyle.style1,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Text(
                               'CM',
-                              style: style2,
+                              style: AppTxtStyle.style2,
                             ),
                           ],
                         ),
@@ -174,7 +185,7 @@ class _firstScreen extends State<firstScreen> {
                 children: [
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 10),
+                      margin: const EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(
                           color: AppColor.Contbackground,
                           borderRadius: BorderRadius.circular(20)),
@@ -182,8 +193,8 @@ class _firstScreen extends State<firstScreen> {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Weight', style: style2),
-                          Text(weight.toString(), style: style2),
+                          Text('Weight', style: AppTxtStyle.style2),
+                          Text(weight.toString(), style: AppTxtStyle.style2),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -196,6 +207,9 @@ class _firstScreen extends State<firstScreen> {
                                   }
                                 },
                                 icon: const Icon(Icons.remove),
+                                style: IconButton.styleFrom(
+                                    backgroundColor: Colors.grey,
+                                    foregroundColor: Colors.white),
                               ),
                               IconButton(
                                 onPressed: () {
@@ -213,12 +227,12 @@ class _firstScreen extends State<firstScreen> {
                       )),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
                     child: Container(
-                      margin: EdgeInsets.only(bottom: 10),
+                      margin: const EdgeInsets.only(bottom: 10),
                       decoration: BoxDecoration(
                           color: AppColor.Contbackground,
                           borderRadius: BorderRadius.circular(20)),
@@ -226,8 +240,8 @@ class _firstScreen extends State<firstScreen> {
                           child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('age', style: style2),
-                          Text(age.toString(), style: style2),
+                          Text('age', style: AppTxtStyle.style2),
+                          Text(age.toString(), style: AppTxtStyle.style2),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -279,10 +293,13 @@ class _firstScreen extends State<firstScreen> {
                       foregroundColor: AppColor.white,
                       backgroundColor: AppColor.PrimaryColor),
                   onPressed: () {
+                    double result= weight/ pow(height/100, 2);
                     Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => ResultView()));
+                        MaterialPageRoute(builder: (context) =>  ResultView(result: result,
+                          
+                        )));
                   },
-                  child: Text(
+                  child: const Text(
                     'Calculate',
                     style: TextStyle(
                       fontSize: 15,
